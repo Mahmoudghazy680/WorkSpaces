@@ -20,10 +20,11 @@ RoomStatus = (
 ####################### Coupons #######################
 
 class Coupon(models.Model):
+    space = models.ForeignKey("space.space", default=None, on_delete=models.CASCADE, verbose_name = ("Space"),null=True, blank=True)
     code = models.CharField(max_length=20, unique=True)
     discount_amount = models.DecimalField(max_digits=5, decimal_places=2)
     expiration_date = models.DateTimeField()
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='coupons')
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='coupons',null=True, blank=True,)
     
     def is_expired(self):
         return self.expiration_date < timezone.now()
@@ -32,10 +33,9 @@ class Coupon(models.Model):
     def __str__(self):
         return f"{self.code}"
       
-######################## Booking #######################
+######################## Reservations #######################
 
 class Reservation(models.Model):
-
     booking_id      = models.BigAutoField(primary_key=True)
     customer        = models.ForeignKey("space.Customer", verbose_name = ("Customer Name "), on_delete=models.CASCADE)
     customer_phone  = models.CharField(max_length=50, null=True, blank=True, verbose_name = ("Customer Phone "))

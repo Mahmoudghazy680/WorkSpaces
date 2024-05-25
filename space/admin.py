@@ -5,9 +5,9 @@ from .models import Customer, Space, Branch, Room, Desk, Table
 from reservation.models import *
 # Register your models here.
 
-admin.site.site_header =    "SPACY Administration Panel"
+admin.site.site_header =    "My Space Administration Panel"
 admin.site.site_title  =    "Welcome To The Admin Panel"
-admin.site.index_title =    "SPACY Admin Panel"
+admin.site.index_title =    "MY Space Admin Panel"
 
 
 

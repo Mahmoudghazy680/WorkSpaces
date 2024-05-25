@@ -10,7 +10,7 @@ from django.utils import timezone
 #################### space details ####################
         
 class Space(models.Model):
-    owner = models.ForeignKey("Customer", on_delete=models.CASCADE, verbose_name = ("Owner Name"),null=True, blank=True)
+    owner = models.ForeignKey("User", on_delete=models.CASCADE, verbose_name = ("Owner Name"),null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name = ("Space Name"))
     slogan = models.CharField(max_length=300, blank=True, null=True, verbose_name = ("Slogan"))
     space_adress = models.CharField(max_length=255, verbose_name = ("Adress"),null=True, blank=True)
@@ -23,7 +23,6 @@ class Space(models.Model):
         return self.name
 
 #################### customer details ####################
-# user=settings.AUTH_USER_MODEL
 
 class Customer(models.Model):   
     space_name = models.ForeignKey(Space, on_delete=models.CASCADE, blank=True, null=True, verbose_name = ("Space"))
@@ -54,7 +53,6 @@ class Branch(models.Model):
     name = models.CharField(max_length=255, verbose_name = ("Branch Name"))
     branch_adress = models.CharField(max_length=255, verbose_name = ("Adress"),null=True, blank=True)
 
-
     class Meta:
         verbose_name        = _("Branch")
         verbose_name_plural = _('3.Branchs')
@@ -65,6 +63,7 @@ class Branch(models.Model):
 #################### Rooms details ####################
     
 class Room(models.Model):
+    space = models.ForeignKey(Space, default=None, on_delete=models.CASCADE, verbose_name = ("Space"))
     branch      = models.ForeignKey(Branch, on_delete=models.CASCADE, verbose_name = ("Branch Name"))
     name        = models.CharField(max_length=255, verbose_name = ("Room Name"))
     room_cost   = models.DecimalField(default= 50,max_digits=5, decimal_places=2, verbose_name = ("Room Cost/H "))
@@ -76,9 +75,10 @@ class Room(models.Model):
     def __str__(self):
         return self.name
     
-#################### Tables details ####################
-    
+#################### Tables details #################### 
 class Table(models.Model):
+    space = models.ForeignKey(Space, default=None, on_delete=models.CASCADE, verbose_name = ("Space"))
+    branch      = models.ForeignKey(Branch, on_delete=models.CASCADE, verbose_name = ("Branch Name"))
     room        = models.ForeignKey(Room, on_delete=models.CASCADE, verbose_name = ("Room Name"))
     name        = models.CharField(max_length=255, verbose_name = ("Table Name"))
     table_cost   = models.DecimalField(default= 50,max_digits=5, decimal_places=2, verbose_name = ("Table Cost/H "))
@@ -101,8 +101,9 @@ class Desk(models.Model):
  
     def __str__(self):
         return self.name
-    
-    
+
+ ####################  last_login details ####################
+   
 def update_last_login(sender, user, **kwargs):
     """
     A signal receiver which updates the last_login date for

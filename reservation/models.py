@@ -2,14 +2,13 @@ from django.conf import settings
 from django.db import models
 
 # Create your models here.
+from space.models import *
 from datetime import datetime, timedelta, timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxLengthValidator
-from space.models import *
 from django.utils import timezone
-
 
 Shared='Shared'
 Private='Private'
@@ -28,7 +27,8 @@ class Coupon(models.Model):
     
     def is_expired(self):
         return self.expiration_date < timezone.now()
-    
+        print ("Sorry, this Coupon is Expired.")
+
     def __str__(self):
         return f"{self.code}"
       
@@ -96,8 +96,6 @@ class Reservation(models.Model):
                 pass
 
         return total
-
-
 
         rounded_total = round(total, 1)
         # If you want to convert it to an integer if there are no decimal places

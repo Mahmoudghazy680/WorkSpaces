@@ -6,7 +6,6 @@ from django.dispatch import receiver
 from reservation.models import Coupon
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 
 #################### space details ####################
         
@@ -14,6 +13,8 @@ class Space(models.Model):
     owner = models.ForeignKey("Customer", on_delete=models.CASCADE, verbose_name = ("Owner Name"),null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name = ("Space Name"))
     slogan = models.CharField(max_length=300, blank=True, null=True, verbose_name = ("Slogan"))
+    space_adress = models.CharField(max_length=255, verbose_name = ("Adress"),null=True, blank=True)
+
     class Meta:
         verbose_name        = _("Space")
         verbose_name_plural = _('2.Spaces')
@@ -25,11 +26,10 @@ class Space(models.Model):
 # user=settings.AUTH_USER_MODEL
 
 class Customer(models.Model):   
-    space_name = models.ForeignKey("Space", on_delete=models.CASCADE, blank=True, null=True, verbose_name = ("Space"))
+    space_name = models.ForeignKey(Space, on_delete=models.CASCADE, blank=True, null=True, verbose_name = ("Space"))
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = ("Customer"))
     # user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True , on_delete=models.CASCADE, verbose_name = ("Customer"))
-    username = models.CharField(max_length=150, unique=True, default='default_username')
-    password = models.CharField(max_length=128, null=True, blank=True)
+    # password = models.CharField(max_length=128, null=True, blank=True)
     first_name = models.CharField(max_length=30, blank=True, null=True, verbose_name = ("First Name"))
     last_name = models.CharField(max_length=30, blank=True, null=True, verbose_name = ("Last Name"))
     email = models.EmailField(blank=True, null=True, verbose_name = ("Email"))
@@ -37,9 +37,10 @@ class Customer(models.Model):
     address = models.TextField(blank=True, null=True, verbose_name = ("Adress "))
     date_of_birth = models.DateField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True, verbose_name = ("Profile Photo"))
-    applied_coupons = models.ManyToManyField(Coupon, blank=True, verbose_name = ("Applied coupons"))
+    applied_coupons = models.ManyToManyField('reservation.Coupon', blank=True, verbose_name = ("Applied coupons"))
     last_login = models.DateTimeField(_('last login'), blank=True, null=True)
     def __str__(self):
+        # return f"{self.user}"
         return f"{self.first_name} {self.last_name}"
     
     class Meta:
@@ -51,6 +52,8 @@ class Customer(models.Model):
 class Branch(models.Model):
     space = models.ForeignKey(Space, on_delete=models.CASCADE, verbose_name = ("Space"))
     name = models.CharField(max_length=255, verbose_name = ("Branch Name"))
+    branch_adress = models.CharField(max_length=255, verbose_name = ("Adress"),null=True, blank=True)
+
 
     class Meta:
         verbose_name        = _("Branch")

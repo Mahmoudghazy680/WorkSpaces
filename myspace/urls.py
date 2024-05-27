@@ -20,7 +20,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('/', include('django.contrib.auth.urls')),  # Include authentication URLs
+    path('reservation/', include('reservation.url')),  # Include reservation URLs
+    path('space/', include('space.urls')),  # Include space URLs
 
 ]
 

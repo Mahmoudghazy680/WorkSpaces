@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxLengthValidator
 from django.utils import timezone
+from space.models import Coupon , Space , Branch, Table , Room , Customer
 
 Shared='Shared'
 Private='Private'
@@ -16,28 +17,13 @@ RoomStatus = (
                 (Shared,'Shared'),
                 (Private,'Private'),
         )
-
-####################### Coupons #######################
-
-class Coupon(models.Model):
-    space = models.ForeignKey("space.space", default=None, on_delete=models.CASCADE, verbose_name = ("Space"),null=True, blank=True)
-    code = models.CharField(max_length=20, unique=True)
-    discount_amount = models.DecimalField(max_digits=5, decimal_places=2)
-    expiration_date = models.DateTimeField()
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='coupons',null=True, blank=True,)
-    
-    def is_expired(self):
-        return self.expiration_date < timezone.now()
-        print ("Sorry, this Coupon is Expired.")
-
-    def __str__(self):
-        return f"{self.code}"
-      
 ######################## Reservations #######################
 
 class Reservation(models.Model):
     booking_id      = models.BigAutoField(primary_key=True)
-    customer        = models.ForeignKey("space.Customer", verbose_name = ("Customer Name "), on_delete=models.CASCADE)
+    space           = models.ForeignKey("space.Space", default=None, on_delete=models.CASCADE, verbose_name = ("Space"),null=True, blank=True)
+    branch          = models.ForeignKey('space.Branch', on_delete=models.CASCADE, verbose_name = ("Branch Name"))
+    customer        = models.ForeignKey('space.Customer', verbose_name = ("Customer Name "), on_delete=models.CASCADE)
     customer_phone  = models.CharField(max_length=50, null=True, blank=True, verbose_name = ("Customer Phone "))
     customer_email  = models.EmailField(max_length=254,null=True, blank=True,  verbose_name = ("Customer E-mail "))
     check_in        = models.TimeField(null=True,default='00:00', blank=True, auto_now=False, auto_now_add=False, verbose_name = ("Check in "))
@@ -48,7 +34,7 @@ class Reservation(models.Model):
     desk_number     = models.ForeignKey("space.Desk", null=True, blank=True,  on_delete=models.CASCADE, verbose_name = ("Desk Number "))
     price           = models.IntegerField(default=0, verbose_name= ("Cost "))
     discount        = models.IntegerField(default=0)
-    coupon          = models.ForeignKey(Coupon, on_delete=models.CASCADE ,null=True, blank=True, verbose_name = ("Coupon"))
+    coupon          = models.ForeignKey(Coupon, on_delete=models.CASCADE ,null=True,blank=True, verbose_name = ("Coupon"))
     want_reminder   = models.BooleanField(default=False, verbose_name="Want Reminder")
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)
@@ -59,7 +45,6 @@ class Reservation(models.Model):
         return f"Our Client {self.customer} - was here " \
                f"{self.check_in.strftime('From :  %H:%M')} -  To : " \
                f"{self.check_out.strftime(' %H:%M')} - At :  "\
-               f"{self.room_number} / {self.desk_number}"\
                f" -  Reservation Number :{self.booking_id}"
   
   

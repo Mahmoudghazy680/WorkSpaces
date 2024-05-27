@@ -1,19 +1,36 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from reservation.models import Coupon
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
+
+####################### Coupons #######################
+
+class Coupon(models.Model):
+    space = models.ForeignKey("space", default=None, on_delete=models.CASCADE, verbose_name = ("Space"),null=True, blank=True)
+    code = models.CharField(max_length=20, unique=True)
+    discount_amount = models.DecimalField(max_digits=5, decimal_places=2)
+    expiration_date = models.DateTimeField()
+    users = models.ManyToManyField(User, blank=True)
+    
+    def is_expired(self):
+        return self.expiration_date < timezone.now()
+        print ("Sorry, this Coupon is Expired.")
+
+    def __str__(self):
+        return f"{self.code}"
+    
 #################### space details ####################
         
 class Space(models.Model):
-    owner = models.ForeignKey("User", on_delete=models.CASCADE, verbose_name = ("Owner Name"),null=True, blank=True)
+    owner = models.ForeignKey("Customer", on_delete=models.CASCADE, verbose_name = ("Owner Name"),null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name = ("Space Name"))
     slogan = models.CharField(max_length=300, blank=True, null=True, verbose_name = ("Slogan"))
-    space_adress = models.CharField(max_length=255, verbose_name = ("Adress"),null=True, blank=True)
+    space_adress = models.CharField(max_length=300, verbose_name = ("Adress"),null=True, blank=True)
 
     class Meta:
         verbose_name        = _("Space")
@@ -23,20 +40,26 @@ class Space(models.Model):
         return self.name
 
 #################### customer details ####################
-
+Male='Male'
+Female='Female'
+gender = (
+                (Male,'Male'),
+                (Female,'Female'),
+        )
 class Customer(models.Model):   
-    space_name = models.ForeignKey(Space, on_delete=models.CASCADE, blank=True, null=True, verbose_name = ("Space"))
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = ("Customer"))
+    space_name  = models.ForeignKey(Space, on_delete=models.CASCADE, blank=True, null=True, verbose_name = ("Space"))
+    user        = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = ("Customer"))
     # user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True , on_delete=models.CASCADE, verbose_name = ("Customer"))
     # password = models.CharField(max_length=128, null=True, blank=True)
-    first_name = models.CharField(max_length=30, blank=True, null=True, verbose_name = ("First Name"))
-    last_name = models.CharField(max_length=30, blank=True, null=True, verbose_name = ("Last Name"))
-    email = models.EmailField(blank=True, null=True, verbose_name = ("Email"))
-    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name = ("Phone Number"))
-    address = models.TextField(blank=True, null=True, verbose_name = ("Adress "))
+    first_name  = models.CharField(max_length=30, blank=True, null=True, verbose_name = ("First Name"))
+    last_name   = models.CharField(max_length=30, blank=True, null=True, verbose_name = ("Last Name "))
+    email       = models.EmailField(blank=True, null=True, verbose_name = ("Email "))
+    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name = ("Phone Number "))
+    address     = models.TextField(blank=True, null=True, verbose_name = ("Adress "))
     date_of_birth = models.DateField(blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True, verbose_name = ("Profile Photo"))
-    applied_coupons = models.ManyToManyField('reservation.Coupon', blank=True, verbose_name = ("Applied coupons"))
+    gender        =  models.CharField(max_length=50, choices=gender, default=Male, verbose_name = ("Gender "))
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True, verbose_name = ("Profile Photo "))
+    applied_coupons = models.ForeignKey(Coupon,on_delete=models.CASCADE,   blank=True,  verbose_name = ("Applied coupons "))
     last_login = models.DateTimeField(_('last login'), blank=True, null=True)
     def __str__(self):
         # return f"{self.user}"
@@ -51,7 +74,7 @@ class Customer(models.Model):
 class Branch(models.Model):
     space = models.ForeignKey(Space, on_delete=models.CASCADE, verbose_name = ("Space"))
     name = models.CharField(max_length=255, verbose_name = ("Branch Name"))
-    branch_adress = models.CharField(max_length=255, verbose_name = ("Adress"),null=True, blank=True)
+    branch_adress = models.CharField(max_length=255, verbose_name = ("Adress"),null=True, blank=True,default='1')
 
     class Meta:
         verbose_name        = _("Branch")

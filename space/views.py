@@ -28,11 +28,25 @@ def space_detail(request, space_id):
         'owner': space.owner_id,
         'name': space.name,
         'slogan': space.slogan,
-        'space_address': space.space_address,
+        'space_address': space.space_adress,
     }
     return JsonResponse(data)
 
 def all_spaces(request):
     spaces = Space.objects.all()
-    data = [{'id': space.id, 'name': space.name} for space in spaces]
+    data = [{'id': space.id, 'name': space.name, 'owner':space.owner_id,'slogan': space.slogan,} for space in spaces]
     return JsonResponse(data, safe=False)
+
+# Customer  views
+
+
+
+# Branch views
+
+
+# Room views
+# Table views
+# Desk views
+# Room views
+# Room views
+# Room views

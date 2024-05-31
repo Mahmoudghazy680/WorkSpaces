@@ -114,6 +114,8 @@ class Table(models.Model):
     
 ####################  Desks details ####################
 class Desk(models.Model):
+    space = models.ForeignKey(Space, default=None, on_delete=models.CASCADE, verbose_name = ("Space"))
+    branch      = models.ForeignKey(Branch, on_delete=models.CASCADE, verbose_name = ("Branch Name"))
     room        = models.ForeignKey(Room, on_delete=models.CASCADE, verbose_name = ("Room Name"))
     name        = models.CharField(max_length=255, verbose_name = ("Desk Name"))
     desk_cost   = models.DecimalField(default= 50,max_digits=5, decimal_places=2, verbose_name = ("Desk Cost/H "))

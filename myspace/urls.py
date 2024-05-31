@@ -22,6 +22,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('reservation/', include('reservation.url')),  # Include reservation URLs
     path('space/', include('space.urls')),  # Include space URLs
+    path('api/', include('api.urls')),  # Include API URLs
 
 ]
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Reservation
-
+from space import models 
 
 def all_reservations(request):
     # Retrieve all reservations from the database
@@ -12,15 +12,15 @@ def all_reservations(request):
     for reservation in reservations:
         reservation_data = {
             'booking_id': reservation.booking_id,
-            'space': reservation.space_id,
-            'branch': reservation.branch_id,
+            'space': reservation.space.name,
+            'branch': reservation.branch.name,
             'customer': reservation.customer_id,
             'customer_phone': reservation.customer_phone,
             'customer_email': reservation.customer_email,
             'check_in': reservation.check_in,
             'check_out': reservation.check_out,
-            'status': reservation.status,
-            'room_number': reservation.room_number_id,
+            'reservation_type': reservation.status,
+            'room_number': reservation.room_number.name,
             'table_number': reservation.table_number_id,
             'desk_number': reservation.desk_number_id,
             'price': reservation.price,

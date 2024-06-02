@@ -28,13 +28,14 @@ class SpaceSerializer(serializers.ModelSerializer):
         model = Space
         fields = ['name','owner','slogan', 'space_adress',]
 
-
 #*********************Customer***************************#
 class CustomerSerializer(serializers.ModelSerializer):
     """
     Serializer for the Customer model.
 
-    This serializer serializes Customer data including user, related space, first/last name, email, phone, address, birth date, gender, picture, applied coupons, and last login for this customer.
+    This serializer serializes Customer data including user, related space, 
+    first/last name, email, phone, address, birth date, gender, picture, 
+    applied coupons, and last login for this customer.
     """
     
     class Meta :
@@ -45,7 +46,8 @@ class CustomerSerializer(serializers.ModelSerializer):
 class BranchSerializer(serializers.ModelSerializer):
     """
     Serializer for the Branch model.
-    This serializer serializes Branch data including branch name, related space , and Branch adress.
+    This serializer serializes Branch data including 
+    branch name, related space , and Branch adress.
     """
     class Meta :
         model = Branch

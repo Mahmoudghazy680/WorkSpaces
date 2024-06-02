@@ -6,8 +6,9 @@ from reservation.models import *
 from space.models import *
 # Create your views here.
 
-
+#************************************************#
 ## Get All Reservations ##
+
 @api_view(['GET'])
 def api_reservations(request):
     reservations = Reservation.objects.all()
@@ -15,22 +16,24 @@ def api_reservations(request):
     return Response(serializer.data)
 
 ## Get Reservation Details ##
-@api_view(['GET'])
+
+@api_view(['GET','POST'])
 def api_reservation(request,pk):
     reservation =  get_object_or_404(Reservation,pk=pk)
     serializer = ReservationSerializer(reservation)
     return Response(serializer.data)
 
 #************************************************#
-
 ## Get All Customers  ##
-@api_view(['GET'])
+
+@api_view(['GET','POST'])
 def api_customers(request):
     customers =  Customer.objects.all()
     serializer = CustomerSerializer(customers,many=True)
     return Response(serializer.data)
 
 ## Get Customer Details ##
+
 @api_view(['GET'])
 def api_customer(request,pk):
     customer =  get_object_or_404(Customer,pk=pk)
@@ -38,8 +41,8 @@ def api_customer(request,pk):
     return Response(serializer.data)
 
 #************************************************#
-
 ## Get All Spaces  ##
+
 @api_view(['GET'])
 def api_spaces(request):
     spaces =  Space.objects.all()
@@ -47,6 +50,7 @@ def api_spaces(request):
     return Response(serializer.data)
 
 ## Get Space Details ##
+
 @api_view(['GET'])
 def api_space(request,pk):
     space =  get_object_or_404(Space,pk=pk)
@@ -54,8 +58,8 @@ def api_space(request,pk):
     return Response(serializer.data)
 
 #************************************************#
-
 ## Get All Branchs  ##
+
 @api_view(['GET'])
 def api_branchs(request):
     branch =  Branch.objects.all()
@@ -63,6 +67,7 @@ def api_branchs(request):
     return Response(serializer.data)
 
 ## Get Branch Details ##
+
 @api_view(['GET'])
 def api_branch(request,pk):
     branch =  get_object_or_404(Branch,pk=pk)
@@ -70,8 +75,8 @@ def api_branch(request,pk):
     return Response(serializer.data)
 
 #************************************************#
-
 ## Get All Rooms  ##
+
 @api_view(['GET'])
 def api_rooms(request):
     room =  Room.objects.all()
@@ -79,6 +84,7 @@ def api_rooms(request):
     return Response(serializer.data)
 
 ## Get Room Details ##
+
 @api_view(['GET'])
 def api_room(request,pk):
     room =  get_object_or_404(Room,pk=pk)
@@ -86,8 +92,8 @@ def api_room(request,pk):
     return Response(serializer.data)
 
 #************************************************#
-
 ## Get All Tables  ##
+
 @api_view(['GET'])
 def api_tables(request):
     table =  Table.objects.all()
@@ -95,6 +101,7 @@ def api_tables(request):
     return Response(serializer.data)
 
 ## Get Tables Details ##
+
 @api_view(['GET'])
 def api_table(request,pk):
     table =  get_object_or_404(Table,pk=pk)
@@ -102,8 +109,8 @@ def api_table(request,pk):
     return Response(serializer.data)
 
 #************************************************#
-
 ## Get All Desks  ##
+
 @api_view(['GET'])
 def api_desks(request):
     desk =  Desk.objects.all()
@@ -111,6 +118,7 @@ def api_desks(request):
     return Response(serializer.data)
 
 ## Get Desk Details ##
+
 @api_view(['GET'])
 def api_desk(request,pk):
     desk =  get_object_or_404(Desk,pk=pk)

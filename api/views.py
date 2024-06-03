@@ -1,128 +1,118 @@
 from django.shortcuts import get_object_or_404, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.status import HTTP_204_NO_CONTENT
+from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from .serializers import *
 from reservation.models import *
 from space.models import *
 # Create your views here.
 
 #************************************************#
-## Get All Reservations ##
+## Get All Reservations ## ListCreateAPIView
+class ApiReservations(ListCreateAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
 
-@api_view(['GET'])
-def api_reservations(request):
-    reservations = Reservation.objects.all()
-    serializer = ReservationSerializer(reservations, many=True)
-    return Response(serializer.data)
 
-## Get Reservation Details ##
+## Get Reservation Details ## RetrieveUpdateDestroyAPIView
+class ApiReservation(RetrieveUpdateDestroyAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
 
-@api_view(['GET','POST'])
-def api_reservation(request,pk):
-    reservation =  get_object_or_404(Reservation,pk=pk)
-    serializer = ReservationSerializer(reservation)
-    return Response(serializer.data)
+# @api_view(['GET','PUT','DELETE'])
+# def api_reservation(request,pk):
+#     reservation =  get_object_or_404(Reservation,pk=pk)
+#     if request.method =="GET":
+#         serializer = ReservationSerializer(reservation)
+#         return Response(serializer.data)
+#     if request.method =="PUT":
+#         serializer = ReservationSerializer(reservation,data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
+#     if request.method =="DELETE":
+#         reservation.delete()
+#         return Response(status=HTTP_204_NO_CONTENT)
+    
 
 #************************************************#
-## Get All Customers  ##
+## Get All Customer  ## ListCreateAPIView
 
-@api_view(['GET','POST'])
-def api_customers(request):
-    customers =  Customer.objects.all()
-    serializer = CustomerSerializer(customers,many=True)
-    return Response(serializer.data)
+class ApiCustomers(ListCreateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
 
-## Get Customer Details ##
+## Get Customer Details ## RetrieveUpdateDestroyAPIView
 
-@api_view(['GET'])
-def api_customer(request,pk):
-    customer =  get_object_or_404(Customer,pk=pk)
-    serializer = CustomerSerializer(customer)
-    return Response(serializer.data)
+class ApiCustomer(RetrieveUpdateDestroyAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
 
 #************************************************#
 ## Get All Spaces  ## 
 
-@api_view(['GET'])
-def api_spaces(request):
-    spaces =  Space.objects.all()
-    serializer = SpaceSerializer(spaces,many=True)
-    return Response(serializer.data)
+
+class ApiSpaces(ListCreateAPIView):
+    queryset = Space.objects.all()
+    serializer_class = SpaceSerializer
 
 ## Get Space Details ##
 
-@api_view(['GET'])
-def api_space(request,pk):
-    space =  get_object_or_404(Space,pk=pk)
-    serializer = SpaceSerializer(space)
-    return Response(serializer.data)
+class ApiSpace(RetrieveUpdateDestroyAPIView):
+    queryset = Space.objects.all()
+    serializer_class = SpaceSerializer
 
 #************************************************#
 ## Get All Branchs  ##
 
-@api_view(['GET'])
-def api_branchs(request):
-    branch =  Branch.objects.all()
-    serializer = BranchSerializer(branch,many=True)
-    return Response(serializer.data)
+class ApiBranchs(ListCreateAPIView):
+    queryset = Branch.objects.all()
+    serializer_class = BranchSerializer
 
 ## Get Branch Details ##
 
-@api_view(['GET'])
-def api_branch(request,pk):
-    branch =  get_object_or_404(Branch,pk=pk)
-    serializer = BranchSerializer(branch)
-    return Response(serializer.data)
+class ApiBranch(RetrieveUpdateDestroyAPIView):
+    queryset = Branch.objects.all()
+    serializer_class = BranchSerializer
 
 #************************************************#
 ## Get All Rooms  ##
 
-@api_view(['GET'])
-def api_rooms(request):
-    room =  Room.objects.all()
-    serializer = RoomSerializer(room,many=True)
-    return Response(serializer.data)
+class ApiRooms(ListCreateAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
 
 ## Get Room Details ##
 
-@api_view(['GET'])
-def api_room(request,pk):
-    room =  get_object_or_404(Room,pk=pk)
-    serializer = RoomSerializer(room)
-    return Response(serializer.data)
+class ApiRoom(RetrieveUpdateDestroyAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
 
 #************************************************#
 ## Get All Tables  ##
 
-@api_view(['GET'])
-def api_tables(request):
-    table =  Table.objects.all()
-    serializer = TableSerializer(table,many=True)
-    return Response(serializer.data)
+class ApiTables(ListCreateAPIView):
+    queryset = Table.objects.all()
+    serializer_class = TableSerializer
 
 ## Get Tables Details ##
 
-@api_view(['GET'])
-def api_table(request,pk):
-    table =  get_object_or_404(Table,pk=pk)
-    serializer = TableSerializer(table)
-    return Response(serializer.data)
+class ApiTable(RetrieveUpdateDestroyAPIView):
+    queryset = Table.objects.all()
+    serializer_class = TableSerializer
 
 #************************************************#
 ## Get All Desks  ##
 
-@api_view(['GET'])
-def api_desks(request):
-    desk =  Desk.objects.all()
-    serializer = DeskSerializer(desk,many=True)
-    return Response(serializer.data)
+class ApiDesks(ListCreateAPIView):
+    queryset = Desk.objects.all()
+    serializer_class = DeskSerializer
 
 ## Get Desk Details ##
 
-@api_view(['GET'])
-def api_desk(request,pk):
-    desk =  get_object_or_404(Desk,pk=pk)
-    serializer = DeskSerializer(desk)
-    return Response(serializer.data)
+class ApiDesk(RetrieveUpdateDestroyAPIView):
+    queryset = Desk.objects.all()
+    serializer_class = DeskSerializer
 
 #************************************************#

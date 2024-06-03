@@ -41,7 +41,7 @@ def api_customer(request,pk):
     return Response(serializer.data)
 
 #************************************************#
-## Get All Spaces  ##
+## Get All Spaces  ## 
 
 @api_view(['GET'])
 def api_spaces(request):

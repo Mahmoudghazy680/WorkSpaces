@@ -9,13 +9,16 @@ from space.models import *
 # Create your views here.
 
 #************************************************#
-## Get All Reservations ## ListCreateAPIView
+##| Get All Reservations ##| ListCreateAPIView
+#************************************************#
+
 class ApiReservations(ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
 
 
-## Get Reservation Details ## RetrieveUpdateDestroyAPIView
+##| Get Reservation Details ##| RetrieveUpdateDestroyAPIView
+
 class ApiReservation(RetrieveUpdateDestroyAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
@@ -37,82 +40,92 @@ class ApiReservation(RetrieveUpdateDestroyAPIView):
     
 
 #************************************************#
-## Get All Customer  ## ListCreateAPIView
-
+##| Get All Customer  |## ListCreateAPIView
+#************************************************#
 class ApiCustomers(ListCreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
-## Get Customer Details ## RetrieveUpdateDestroyAPIView
+##| Get Customer Details ##| RetrieveUpdateDestroyAPIView
 
 class ApiCustomer(RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
 #************************************************#
-## Get All Spaces  ## 
-
+##| Get All Spaces  |## 
+#************************************************#
 
 class ApiSpaces(ListCreateAPIView):
     queryset = Space.objects.all()
     serializer_class = SpaceSerializer
 
-## Get Space Details ##
+##| Get Space Details |##
 
 class ApiSpace(RetrieveUpdateDestroyAPIView):
     queryset = Space.objects.all()
     serializer_class = SpaceSerializer
 
 #************************************************#
-## Get All Branchs  ##
+#  ##| Get All Branchs  |##
+#************************************************#
 
 class ApiBranchs(ListCreateAPIView):
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
 
-## Get Branch Details ##
+##| Get Branch Details |##
 
 class ApiBranch(RetrieveUpdateDestroyAPIView):
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
 
 #************************************************#
-## Get All Rooms  ##
+#  Get All Rooms  |##
+#************************************************#
 
 class ApiRooms(ListCreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
-## Get Room Details ##
+##| Get Room Details |##
 
 class ApiRoom(RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
 #************************************************#
-## Get All Tables  ##
+# ##| Get All Tables  |##
+#************************************************#
 
 class ApiTables(ListCreateAPIView):
     queryset = Table.objects.all()
     serializer_class = TableSerializer
 
-## Get Tables Details ##
+##| Get Tables Details |##
 
 class ApiTable(RetrieveUpdateDestroyAPIView):
     queryset = Table.objects.all()
     serializer_class = TableSerializer
 
 #************************************************#
-## Get All Desks  ##
+##| Get All Desks  |##
+#************************************************#
 
 class ApiDesks(ListCreateAPIView):
     queryset = Desk.objects.all()
     serializer_class = DeskSerializer
 
-## Get Desk Details ##
+##| Get Desk Details |##
 
 class ApiDesk(RetrieveUpdateDestroyAPIView):
     queryset = Desk.objects.all()
     serializer_class = DeskSerializer
 
 #************************************************#
+##|| Get All Coupons  |##
+#************************************************#
+
+class ApiCoupons(ListCreateAPIView):
+    queryset = Coupon.objects.all()
+    serializer_class = CouponSerializer

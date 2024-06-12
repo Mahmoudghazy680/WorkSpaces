@@ -11,8 +11,8 @@ urlpatterns = [
     path('customers/', ApiCustomers.as_view()),
     path('customers/<int:pk>', ApiCustomer.as_view()),
  
-    path('Spaces/', ApiSpaces.as_view()),
-    path('Spaces/<int:pk>', ApiSpace.as_view()),
+    path('spaces/', ApiSpaces.as_view()),
+    path('spaces/<int:pk>', ApiSpace.as_view()),
  
     path('branchs/', ApiBranchs.as_view()),
     path('branchs/<int:pk>', ApiBranch.as_view()),
@@ -26,6 +26,9 @@ urlpatterns = [
     path('desks/', ApiDesks.as_view()),
     path('desks/<int:pk>', ApiDesk.as_view()),
   
+    path('copuon/', ApiCoupons.as_view()),
+
+
        # API FBV  
     # path('reservations/',api_reservations), 
     # path('reservations/<int:pk>', api_reservation),

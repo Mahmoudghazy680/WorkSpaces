@@ -17,6 +17,14 @@ class ReservationSerializer(serializers.ModelSerializer):
         # fields = ['pk', 'space', 'branch', 'customer', 'price', 'created_at',  ]
         fields = ['pk','booking_id', 'space', 'branch', 'customer','customer_email', 'customer_phone', 'check_in', 'check_out', 'status', 'room_number', 'table_number', 'desk_number', 'price', 'discount', 'coupon', 'created_at', 'updated_at', ]
 
+    space = serializers.StringRelatedField()
+    branch = serializers.StringRelatedField()
+    customer = serializers.StringRelatedField()
+    room_number = serializers.StringRelatedField()
+    table_number = serializers.StringRelatedField()
+    desk_number = serializers.StringRelatedField()
+    coupon = serializers.StringRelatedField()
+
 #*********************Space***************************#
 class SpaceSerializer(serializers.ModelSerializer):
     """
@@ -27,6 +35,8 @@ class SpaceSerializer(serializers.ModelSerializer):
     class Meta :
         model = Space
         fields = ['name','owner','slogan', 'space_adress',]
+    
+    owner = serializers.StringRelatedField()
 
 #*********************Customer***************************#
 class CustomerSerializer(serializers.ModelSerializer):
@@ -42,6 +52,10 @@ class CustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ['space_name', 'user', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'date_of_birth', 'gender', 'profile_picture', 'applied_coupons', 'last_login', ]
 
+    space_name = serializers.StringRelatedField()
+    user = serializers.StringRelatedField()
+    applied_coupons = serializers.StringRelatedField()
+
 #**********************Branch**************************#
 class BranchSerializer(serializers.ModelSerializer):
     """
@@ -51,31 +65,49 @@ class BranchSerializer(serializers.ModelSerializer):
     """
     class Meta :
         model = Branch
-        fields = ['space','name','branch_adress', ]
+        fields = ['space','name', 'branch_adress']
+
+    space = serializers.StringRelatedField()
+    branch_adress = serializers.StringRelatedField()
+
 
 #*********************Room***************************#
 class RoomSerializer(serializers.ModelSerializer):
     class Meta :
         model = Room
         fields = ('space','branch','name', 'room_cost', )
+   
+    space = serializers.StringRelatedField()
+    branch = serializers.StringRelatedField()
 
-#*********************Table***************************#
+#**********************| Table |**************************#
 class TableSerializer(serializers.ModelSerializer):
     class Meta :
         model = Table
         fields = ('space','branch','room', 'name', 'table_cost')
 
-#**********************Desk**************************#
+    space = serializers.StringRelatedField()
+    branch = serializers.StringRelatedField()
+    room = serializers.StringRelatedField()
+
+#**********************| Desk |**************************#
 class DeskSerializer(serializers.ModelSerializer):
     class Meta :
         model = Desk
         fields = ('space','branch','room', 'name', 'desk_cost')
 
-#**********************Coupon**************************#
+    space = serializers.StringRelatedField()
+    branch = serializers.StringRelatedField()
+    room = serializers.StringRelatedField()
+
+#**********************| Coupon |**************************#
 class CouponSerializer(serializers.ModelSerializer):
     class Meta :
         model = Coupon
         fields = ('space','code','discount_amount', 'expiration_date', 'users')
+
+    space = serializers.StringRelatedField()
+    users = serializers.StringRelatedField()
 
 #************************************************#
 

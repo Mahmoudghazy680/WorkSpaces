@@ -3,9 +3,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 from .serializers import *
 from reservation.models import *
 from space.models import *
+from .filter import *
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter , OrderingFilter
 # Create your views here.
 
 #************************************************#
@@ -15,29 +19,20 @@ from space.models import *
 class ApiReservations(ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
-
-
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = ReservationFilter
+    search_fields = ['customer', 'customer_phone', 'room_number','table_number', 'desk_number']
+    ordering_fields = ['booking_id','price','room_number',]
 ##| Get Reservation Details ##| RetrieveUpdateDestroyAPIView
 
 class ApiReservation(RetrieveUpdateDestroyAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = ReservationFilter
+    search_fields = ['customer', 'customer_phone', 'room_number','table_number', 'desk_number']
+    ordering_fields = ['booking_id','price',]
 
-# @api_view(['GET','PUT','DELETE'])
-# def api_reservation(request,pk):
-#     reservation =  get_object_or_404(Reservation,pk=pk)
-#     if request.method =="GET":
-#         serializer = ReservationSerializer(reservation)
-#         return Response(serializer.data)
-#     if request.method =="PUT":
-#         serializer = ReservationSerializer(reservation,data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data)
-#     if request.method =="DELETE":
-#         reservation.delete()
-#         return Response(status=HTTP_204_NO_CONTENT)
-    
 
 #************************************************#
 ##| Get All Customer  |## ListCreateAPIView
@@ -45,6 +40,10 @@ class ApiReservation(RetrieveUpdateDestroyAPIView):
 class ApiCustomers(ListCreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = CustomerFilter
+    search_fields = ['user', 'customer_phone', 'first_name','last_name', 'email', 'gender']
+    ordering_fields = ['user',]
 
 ##| Get Customer Details ##| RetrieveUpdateDestroyAPIView
 

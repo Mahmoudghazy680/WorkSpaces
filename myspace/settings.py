@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'space',
     'reservation',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

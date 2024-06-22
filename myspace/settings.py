@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'space',
     'reservation',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
 ]
 
@@ -117,6 +118,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.TokenAuthentication',
+#     ]
+# }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

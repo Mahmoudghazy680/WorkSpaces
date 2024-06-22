@@ -34,7 +34,7 @@ class SpaceSerializer(serializers.ModelSerializer):
      
     class Meta :
         model = Space
-        fields = ['name','owner','slogan', 'space_adress',]
+        fields = '__all__'
     
     owner = serializers.StringRelatedField()
 
@@ -50,7 +50,7 @@ class CustomerSerializer(serializers.ModelSerializer):
     
     class Meta :
         model = Customer
-        fields = ['space_name', 'user', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'date_of_birth', 'gender', 'profile_picture', 'applied_coupons', 'last_login', ]
+        fields = '__all__'
 
     space_name = serializers.StringRelatedField()
     user = serializers.StringRelatedField()
@@ -65,7 +65,7 @@ class BranchSerializer(serializers.ModelSerializer):
     """
     class Meta :
         model = Branch
-        fields = ['space','name', 'branch_adress']
+        fields = '__all__'
 
     space = serializers.StringRelatedField()
     branch_adress = serializers.StringRelatedField()
@@ -75,7 +75,7 @@ class BranchSerializer(serializers.ModelSerializer):
 class RoomSerializer(serializers.ModelSerializer):
     class Meta :
         model = Room
-        fields = ('space','branch','name', 'room_cost', )
+        fields =  '__all__'
    
     space = serializers.StringRelatedField()
     branch = serializers.StringRelatedField()
@@ -94,7 +94,7 @@ class TableSerializer(serializers.ModelSerializer):
 class DeskSerializer(serializers.ModelSerializer):
     class Meta :
         model = Desk
-        fields = ('space','branch','room', 'name', 'desk_cost')
+        fields =  '__all__'
 
     space = serializers.StringRelatedField()
     branch = serializers.StringRelatedField()

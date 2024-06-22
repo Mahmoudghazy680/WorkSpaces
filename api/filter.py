@@ -42,3 +42,24 @@ class SpaceFilter (FilterSet):
             'space_adress'     :['contains'],
    
         }
+
+class RoomFilter (FilterSet): 
+    class Meta:
+        model = Room
+        fields = {
+            'name'     :['exact'],   
+        }
+
+class TableFilter (FilterSet): 
+    class Meta:
+        model = Table
+        fields = {
+            'name'     :['exact'],   
+        }
+
+class DeskFilter (FilterSet): 
+    class Meta:
+        model = Desk
+        fields = {
+            'name'     :['exact'],   
+        }

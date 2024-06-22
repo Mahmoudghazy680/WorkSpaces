@@ -1,9 +1,24 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
+from rest_framework.authtoken import views
+from rest_framework.routers import DefaultRouter
 
 app_name = 'api'
 
+router = DefaultRouter()
+router.register('reservations', ReservationViewsets)
+router.register('customers', CustomerViewsets)
+router.register('spaces', SpaceViewsets)
+router.register('branchs', BranchViewsets)
+router.register('rooms', RoomViewsets)
+router.register('tables', TableViewsets)
+router.register('desks', DeskViewsets)
+router.register('copuon', CopunViewsets)
+
+# urlpatterns = router.urls
 urlpatterns = [
+    path('',include(router.urls)),
+
     # API Class Based View
     path('reservations/', ApiReservations.as_view()),
     path('reservations/<int:pk>', ApiReservation.as_view()),
@@ -29,7 +44,7 @@ urlpatterns = [
     path('copuon/', ApiCoupons.as_view()),
 
 
-       # API FBV  
-    # path('reservations/',api_reservations), 
-    # path('reservations/<int:pk>', api_reservation),
+
+    # path('api-token-auth/', views.obtain_auth_token),
+
 ]
